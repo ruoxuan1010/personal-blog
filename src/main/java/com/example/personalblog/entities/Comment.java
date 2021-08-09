@@ -1,6 +1,5 @@
 package com.example.personalblog.entities;
 
-import com.example.personalblog.entities.Article;
 import com.example.personalblog.utils.TimeConverter;
 import lombok.Data;
 
