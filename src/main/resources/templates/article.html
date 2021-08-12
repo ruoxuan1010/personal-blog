@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:fragment=“site-head”>
+    <meta charset=“UTF-8”/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <title th:text="${article.title}"></title>
+</head>
+<body>
+<header th:fragment=“site-header”>
+    <div class="nav">
+        <div class="nav-bar">
+            <text>Ruoxuan's Blog</text>
+            <div class="nav-right">
+                <a th:href="@{/articles}" class="nav-item">Posts</a>
+                <a th:href="@{/articles/edit}" class="nav-item">Create Post</a>
+                <!--                <a th:href="@{/articles/create}" class="nav-item">Create Post</a>-->
+                <a th:href="@{/users/login}" class="nav-item">Login</a>
+                <a th:href="@{/users/register}" class="nav-item">Register</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <h1><a th:text="${article.title}"></a></h1>
+<!--    <h3 th:text="${publishDate}"></h3>-->
+    <h3 th:text="${#temporals.format(article.getPublishDate(), 'dd-MM-yyyy HH:mm')}"></h3>
+    <br>
+    <text style="margin-top:20px"><a th:text="${article.content}"></a></text>
+    <div style="margin-top:20px">
+        <form action="#" th:action="@{'/articles/{id}'(id=${article.id})}" th:method="delete">
+            <input type="hidden" name="_method" value="delete"/>
+            <button type="submit" th:text="Delete">Delete</button>
+        </form>
+    </div>
+    <div>
+        <h2>Comments(<a th:text="${numOfComments}"></a>)</h2>
+        <div th:each="comment:${comments}">
+            <h4 th:text="${comment.name} + ' ' + ${#temporals.format(comment.getCommentDate(), 'dd-MM-yyyy HH:mm')}"></h4>
+            <text th:text="${comment.content}"></text>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

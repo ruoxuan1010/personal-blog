@@ -28,4 +28,48 @@ public class Article {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "article")
     private List<Comment> comments;
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setPublishDate(LocalDateTime publishDate) {
+        this.publishDate = publishDate;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getSynopsis() {
+        return synopsis;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public LocalDateTime getPublishDate() {
+        return publishDate;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
 }

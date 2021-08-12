@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:fragment=“site-head”>
+    <meta charset=“UTF-8”/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <title>Edit</title>
+</head>
+<body>
+<header th:fragment=“site-header”>
+    <div class="nav">
+        <div class="nav-bar">
+            <text>Ruoxuan's Blog</text>
+            <div class="nav-right">
+                <a th:href="@{/articles}" class="nav-item">Posts</a>
+                <a th:href="@{/articles/edit}" class="nav-item">Create Post</a>
+                <a th:href="@{/users/login}" class="nav-item">Login</a>
+                <a th:href="@{/users/register}" class="nav-item">Register</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <form action="#" th:action="@{/articles/edit}" th:object="${article}" method="post" role="form">
+        <div>
+            <label for="title">Title</label>
+            <input class="article-title" type="text" name="title" th:value="*{title}" id="title" required/>
+        </div>
+        <div>
+            <label for="content" style="width: 1200px">Content</label>
+            <textarea name="content" id="content" class="article-textarea" th:value="*{content}" required></textarea>
+        </div>
+        <div>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+
+<body>
+
+</body>
+</html>

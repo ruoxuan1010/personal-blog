@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:fragment=“site-head”>
+    <meta charset=“UTF-8”/>
+<!--    <link rel="stylesheet" type="text/css" href="css/web.css">-->
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <title>Ruoxuan's Blog</title>
+</head>
+<body>
+<header th:fragment=“site-header”>
+    <div class="nav">
+        <div class="nav-bar">
+            <text>Ruoxuan's Blog</text>
+            <div class="nav-right">
+                <a th:href="@{/articles}" class="nav-item">Posts</a>
+                <a th:href="@{/articles/edit}" class="nav-item">Create Post</a>
+                <a th:href="@{/users/login}" class="nav-item">Login</a>
+                <a th:href="@{/users/register}" class="nav-item">Register</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div th:each="article: ${articles}">
+        <h2><a href="article.html" th:text="${article.title}" th:href="@{/articles/{id}(id=${article.id})}"></a></h2>
+        <text class="synopsis">
+            <span th:text="${article.synopsis}"></span>
+            ...
+        </text>
+        <br/><br/>
+    </div>
+</div>
+
+
+</body>
+</html>
