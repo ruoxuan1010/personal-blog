@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:fragment=“site-head”>
     <meta charset=“UTF-8”/>
     <!--    <link rel="stylesheet" type="text/css" href="css/web.css">-->
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
-    <title>Register</title>
+    <title>Ruoxuan's Blog</title>
 </head>
 <body>
 <header th:fragment=“site-header”>
@@ -13,25 +13,26 @@
             <text>Ruoxuan's Blog</text>
             <div class="nav-right">
                 <a th:href="@{/articles}" class="nav-item">Posts</a>
-                <a th:href="@{/articles/edit}" class="nav-item">Create Post</a>
-                <a th:href="@{/users/login}" class="nav-item">Login</a>
-                <a th:href="@{/users/register}" class="nav-item">Register</a>
+                <a th:href="@{/edit}" sec:authorize="hasAuthority('ADMIN')" class="nav-item" >Create Post</a>
+                <a th:href="@{/login}" sec:authorize="!isAuthenticated()" class="nav-item">Login</a>
+                <a th:href="@{/register}" sec:authorize="!isAuthenticated()" class="nav-item">Register</a>
+                <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="nav-item">Log out</a>
             </div>
         </div>
     </div>
 </header>
 <div class="container">
-    <form action="#" th:action="@{/articles/edit}" th:object="${article}" method="post" role="form">
+    <form action="#" th:action="@{/login}" method="post">
         <div>
-            <label for="title">Title</label>
-            <input class="article-title" type="text" name="title" th:value="*{title}" id="title" required/>
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" required/>
         </div>
         <div>
-            <label for="content" style="width: 1200px">Content</label>
-            <textarea name="content" id="content" class="article-textarea" th:value="*{content}" required></textarea>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required/>
         </div>
         <div>
-            <button type="submit">Submit</button>
+            <button type="submit">Login</button>
         </div>
 </div>
 

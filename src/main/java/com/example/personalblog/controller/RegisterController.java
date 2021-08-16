@@ -1,7 +1,10 @@
 package com.example.personalblog.controller;
 
+import com.example.personalblog.entities.Role;
 import com.example.personalblog.entities.User;
 import com.example.personalblog.repositories.UserRepository;
+import com.example.personalblog.utils.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.core.userdetails.UserDetailsResourceFactoryBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("")
 public class RegisterController {
 
-    private final UserRepository userRepository;
+    private UserService userService;
 
-    public RegisterController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public RegisterController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/register")
@@ -31,11 +34,14 @@ public class RegisterController {
     @PostMapping("/register")
     public String createUser(@ModelAttribute User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "error";
+            model.addAttribute("user", new User());
+            return "/register";
         }
         // todo: check if input is valid
-        user.setRole("USER");
-        userRepository.save(user);
+        if (userService.findUserByUsername(user.getUsername()) != null) {
+            return "error";
+        }
+        userService.saveUser(user);
         return "redirect:/articles/";
     }
 }

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:fragment=“site-head”>
     <meta charset=“UTF-8”/>
     <!--    <link rel="stylesheet" type="text/css" href="css/web.css">-->
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
-    <title>Register</title>
+    <title>Ruoxuan's Blog</title>
 </head>
 <body>
 <header th:fragment=“site-header”>
@@ -14,23 +13,23 @@
             <text>Ruoxuan's Blog</text>
             <div class="nav-right">
                 <a th:href="@{/articles}" class="nav-item">Posts</a>
-                <a th:href="@{/articles/edit}" class="nav-item">Create Post</a>
-                <a th:href="@{/users/login}" class="nav-item">Login</a>
-                <a th:href="@{/users/register}" sec:authorize="!isAuthenticated()" class="nav-item">Register</a>
-                <a th:href="@{/users/logout}" sec:authorize="isAuthenticated()" class="nav-item">Register</a>
+                <a th:href="@{/edit}" sec:authorize="hasAuthority('ADMIN')" class="nav-item" >Create Post</a>
+                <a th:href="@{/login}" sec:authorize="!isAuthenticated()" class="nav-item">Login</a>
+                <a th:href="@{/register}" sec:authorize="!isAuthenticated()" class="nav-item">Register</a>
+                <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="nav-item">Log out</a>
             </div>
         </div>
     </div>
 </header>
 <div class="container">
-    <form action="#" th:action="@{/users/register}" th:object="${user}" method="post" role="form">
+    <form action="#" th:action="@{/register}" th:object="${user}" method="post" role="form">
         <div>
             <label for="username">Username</label>
             <input type="text" name="username" th:value="*{username}" id="username" required/>
         </div>
         <div>
             <label for="password">Password</label>
-            <input type="text" name="password" id="password" th:value="*{password}" required/>
+            <input type="password" name="password" id="password" th:value="*{password}" required/>
         </div>
         <div>
             <label for="email">Email</label>

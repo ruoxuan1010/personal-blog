@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:fragment=“site-head”>
     <meta charset=“UTF-8”/>
-<!--    <link rel="stylesheet" type="text/css" href="css/web.css">-->
+    <!--    <link rel="stylesheet" type="text/css" href="css/web.css">-->
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
     <title>Ruoxuan's Blog</title>
 </head>
@@ -13,9 +13,10 @@
             <text>Ruoxuan's Blog</text>
             <div class="nav-right">
                 <a th:href="@{/articles}" class="nav-item">Posts</a>
-                <a th:href="@{/articles/edit}" class="nav-item">Create Post</a>
-                <a th:href="@{/users/login}" class="nav-item">Login</a>
-                <a th:href="@{/users/register}" class="nav-item">Register</a>
+                <a th:href="@{/edit}" sec:authorize="hasAuthority('ADMIN')" class="nav-item" >Create Post</a>
+                <a th:href="@{/login}" sec:authorize="!isAuthenticated()" class="nav-item">Login</a>
+                <a th:href="@{/register}" sec:authorize="!isAuthenticated()" class="nav-item">Register</a>
+                <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="nav-item">Log out</a>
             </div>
         </div>
     </div>

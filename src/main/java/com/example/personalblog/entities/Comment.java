@@ -17,9 +17,6 @@ public class Comment {
     @Column
     private String name;
 
-    @Column
-    private String email;
-
     @Column(length = 150)
     private String content;
 

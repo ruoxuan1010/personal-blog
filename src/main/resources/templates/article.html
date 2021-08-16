@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:fragment=“site-head”>
     <meta charset=“UTF-8”/>
+    <!--    <link rel="stylesheet" type="text/css" href="css/web.css">-->
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
-    <title th:text="${article.title}"></title>
+    <title>Ruoxuan's Blog</title>
 </head>
 <body>
 <header th:fragment=“site-header”>
@@ -12,10 +13,11 @@
             <text>Ruoxuan's Blog</text>
             <div class="nav-right">
                 <a th:href="@{/articles}" class="nav-item">Posts</a>
-                <a th:href="@{/articles/edit}" class="nav-item">Create Post</a>
-                <!--                <a th:href="@{/articles/create}" class="nav-item">Create Post</a>-->
-                <a th:href="@{/users/login}" class="nav-item">Login</a>
-                <a th:href="@{/users/register}" class="nav-item">Register</a>
+                <a th:href="@{/edit}" sec:authorize="hasAuthority('ADMIN')" class="nav-item" >Create Post</a>
+                <a th:href="@{/login}" sec:authorize="!isAuthenticated()" class="nav-item">Login</a>
+                <a th:href="@{/register}" sec:authorize="!isAuthenticated()" class="nav-item">Register</a>
+                <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="nav-item">Log out</a>
+                <a sec:authorize="isAuthenticated()" sec:authentication="name" class="nav-item"></a>
             </div>
         </div>
     </div>
@@ -30,11 +32,23 @@
     <div style="margin-top:20px">
         <form action="#" th:action="@{'/articles/{id}'(id=${article.id})}" th:method="delete">
             <input type="hidden" name="_method" value="delete"/>
-            <button type="submit" th:text="Delete">Delete</button>
+            <button type="submit" th:text="Delete" sec:authorize="hasAuthority('ADMIN')">Delete</button>
         </form>
     </div>
     <div>
         <h2>Comments(<a th:text="${numOfComments}"></a>)</h2>
+        <div class="container" sec:authorize="isAuthenticated()">
+            <form action="#" th:action="@{'/articles/{id}/comment'(id=${article.id})}" th:object="${newComment}" method="post" role="form">
+                <div>
+                    <label for="content">Content</label>
+                    <textarea name="content" id="content" class="comment-textarea" th:value="*{content}" required></textarea>
+                </div>
+                <div>
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+
         <div th:each="comment:${comments}">
             <h4 th:text="${comment.name} + ' ' + ${#temporals.format(comment.getCommentDate(), 'dd-MM-yyyy HH:mm')}"></h4>
             <text th:text="${comment.content}"></text>

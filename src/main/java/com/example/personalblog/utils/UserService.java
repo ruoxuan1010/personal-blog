@@ -1,56 +1,44 @@
 package com.example.personalblog.utils;
 
+import com.example.personalblog.entities.Role;
 import com.example.personalblog.entities.User;
+import com.example.personalblog.repositories.RoleRepository;
 import com.example.personalblog.repositories.UserRepository;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-public class UserService implements UserDetails {
-    private User user;
+@Service
+public class UserService {
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserService(User user) {
-        this.user = user;
+    @Autowired
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRole()));
-        return authorities;
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
-    @Override
-    public String getPassword() {
-        return user.getPassword();
+    public User findUserByUsername(String name) {
+        return userRepository.findByUsername(name);
     }
 
-    @Override
-    public String getUsername() {
-        return user.getUsername();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
+    public User saveUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setActive(true);
+        Role role = roleRepository.findByRole("USER");
+        Set<Role> roles = new HashSet<>(Arrays.asList(role));
+        user.setRoles(roles);
+        return userRepository.save(user);
     }
 }
