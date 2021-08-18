@@ -17,6 +17,7 @@
                 <a th:href="@{/login}" sec:authorize="!isAuthenticated()" class="nav-item">Login</a>
                 <a th:href="@{/register}" sec:authorize="!isAuthenticated()" class="nav-item">Register</a>
                 <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="nav-item">Log out</a>
+                <a sec:authorize="isAuthenticated()" sec:authentication="name" class="nav-item"></a>
             </div>
         </div>
     </div>

@@ -118,6 +118,7 @@ public class ArticleController {
             List<Comment> comments = article.getComments();
             comments.add(comment);
             article.setComments(comments);
+            articleRepository.save(article);
             comment.setArticle(article);
             commentRepository.save(comment);
             return "redirect:/articles/" + article.getId();
