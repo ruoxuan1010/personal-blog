@@ -8,7 +8,7 @@ I have to admit here that I think it is quite annoying to compile and run my cod
 
 The blog relies on the mysql database which is defined in the `application.properties`.
 
-![image-20210819102323672](README.assets/image-20210819102323672.png)
+![image-20210819102323672](https://user-images.githubusercontent.com/82575585/130000778-94715612-4b01-4b12-8583-8aef58c9af05.png)
 
 When run the program first time, I have to insert the role manually. 
 
@@ -23,7 +23,7 @@ VALUES
 
 In order to create administrator's account, change the "USER" to `ADMIN` in the `saveUser ` method of the `UserService` class, and then change it back after register successfully. 
 
-![image-20210819103401698](README.assets/image-20210819103401698.png)
+![image-20210819103401698](https://user-images.githubusercontent.com/82575585/130000802-6e9ab5f8-0886-4d12-a45b-50cf9f43b1b4.png)
 
 #### Bugs
 
