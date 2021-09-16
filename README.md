@@ -1,5 +1,3 @@
-Video Link: https://youtu.be/5qT_sAffn8Q
-
 ### Instructions
 
 I have to admit here that I think it is quite annoying to compile and run my code in other computers. 
